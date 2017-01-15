@@ -1,21 +1,30 @@
-import java.awt.Color; 
-import javax.swing.*;
-import java.awt.*;
+import java.awt.BorderLayout;
+import java.awt.Color;
+import java.awt.Dimension;
+import java.awt.Font;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
+
+import javax.swing.ImageIcon;
+import javax.swing.JFrame;
+import javax.swing.JLabel;
+import javax.swing.JMenu;
+import javax.swing.JMenuBar;
+import javax.swing.JMenuItem;
+import javax.swing.JOptionPane;
+import javax.swing.JPanel;
 
 @SuppressWarnings("serial")
 public class Fenetre extends JFrame
 {
+	static String version = "v1.0.1";
 	static int cptQuistis = 0;
 	static int cptZell = 0;
 	JLabel labelQuistis;
 	JLabel labelZell;
 	
 	public Fenetre()
-	{
-		this.setTitle("Ma première fenêtre Java");
-		this.setSize(150, 190);
-		this.setLocationRelativeTo(null);
-		
+	{		
 		Font font = new Font("Arial",Font.BOLD,25);
 		
 		this.labelQuistis = new JLabel("0");
@@ -63,10 +72,48 @@ public class Fenetre extends JFrame
 		pan.add(west, BorderLayout.WEST);
 		pan.add(east, BorderLayout.EAST);
 		pan.add(center, BorderLayout.CENTER);
-		      
-		this.setContentPane(pan);         
-		this.setVisible(true);
+	      
+		this.setContentPane(pan);
 		this.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		this.addKeyListener(new ClavierListener(this));
+		this.setJMenuBar(this.createMenu());
+		this.setTitle("Card Counter " + version);
+		this.setSize(300, 220);
+		this.setLocationRelativeTo(null);         
+		this.setVisible(true);
+	}
+	
+	private JMenuBar createMenu() 
+	{
+		JMenuBar menuBar = new JMenuBar();
+		menuBar.setVisible(true);
+
+		JMenu fichier = new JMenu("Fichier");
+		JMenu aPropos = new JMenu("?");
+		
+		JMenuItem help = new JMenuItem("A propos");
+		help.addActionListener(new ActionListener() {
+			
+			@Override
+			public void actionPerformed(ActionEvent e) {
+				JOptionPane.showMessageDialog(null, "Card Counter " + Fenetre.version + " créé par Isabelle J\nGNU GENERAL PUBLIC LICENSE Version 3, 29 June 2007");				
+			}
+		});
+			
+		JMenuItem configurer = new JMenuItem("Configurer");
+		configurer.addActionListener(new ActionListener() {
+			
+			@Override
+			public void actionPerformed(ActionEvent e) {
+				JOptionPane.showMessageDialog(null, "coming soon...");				
+			}
+		});
+		
+		fichier.add(configurer);
+		aPropos.add(help);
+		menuBar.add(fichier);
+		menuBar.add(aPropos);
+		
+		return menuBar;
 	}
 }
